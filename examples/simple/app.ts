@@ -1,10 +1,10 @@
 import axios from '../../src/index'
 
+const paramsString = 'q=URLUtils.searchParams&topic=api'
+const searchParams = new URLSearchParams(paramsString)
+
 axios({
-  method: 'get',
-  url: '/simple/get',
-  params: {
-    a: 1,
-    b: 2
-  }
+  method: 'post',
+  url: '/base/post',
+  data: searchParams
 })
