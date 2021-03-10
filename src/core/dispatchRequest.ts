@@ -1,7 +1,3 @@
-// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-// import "core-js/fn/array.find"
-// ...
-// export default class DummyClass {
 
 import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from "../types"
 import xhr from "./xhr"
@@ -9,7 +5,6 @@ import { buildURL } from "../helpers/url"
 import { transformRequest, transformResponse } from "../helpers/data"
 import { processHeaders } from "../helpers/headers"
 
-// }
 
 
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
