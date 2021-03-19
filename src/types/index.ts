@@ -1,3 +1,5 @@
+import InterceptorManager from "../core/InterceptorManager "
+
 
 export interface AxiosRequestConfig {
   url?: string
@@ -41,8 +43,15 @@ export interface AxiosError extends Error {
   isAxiosError: boolean
 }
 
+export interface Interceptor {
+  request: InterceptorManager<AxiosRequestConfig>
+  response: InterceptorManager<AxiosResponse>
+}
+
 
 export interface Axios {
+  interceptors: Interceptor
+
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -78,4 +87,9 @@ export interface ResolvedFn<T=any> {
 }
 export interface RejectedFn {
   (error: any): any
+}
+
+
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
 }

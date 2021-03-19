@@ -1,12 +1,12 @@
-import { AxiosPromise, AxiosRequestConfig, AxiosResponse, Method, RejectedFn, ResolvedFn } from "../types";
+import { AxiosPromise, AxiosRequestConfig, AxiosResponse, Interceptor, Method, RejectedFn, ResolvedFn } from "../types";
 import dispatchRequest from "./dispatchRequest";
 import InterceptorManager from "./InterceptorManager ";
 
 
-interface Interceptor {
-  request: InterceptorManager<AxiosRequestConfig>
-  response: InterceptorManager<AxiosResponse>
-}
+// interface Interceptor {
+//   request: InterceptorManager<AxiosRequestConfig>
+//   response: InterceptorManager<AxiosResponse>
+// }
 
 interface PromiseChain {
   resolved: ResolvedFn | ((config: AxiosRequestConfig) => AxiosPromise)
@@ -16,15 +16,17 @@ interface PromiseChain {
 
 export default class Axios {
   interceptors: Interceptor
+  defaults: AxiosRequestConfig
+  constructor(initConfig: AxiosRequestConfig) {
+    this.defaults = initConfig
 
-  constructor() {
     this.interceptors = {
       request: new InterceptorManager<AxiosRequestConfig>(),
       response: new InterceptorManager<AxiosResponse>()
     }
   }
 
-  request(url:any, config?: AxiosRequestConfig): AxiosPromise {
+  request(url:any, config?: any): AxiosPromise {
     if (typeof url === 'string') {
       if (!config) {
         config = {}
@@ -55,8 +57,7 @@ export default class Axios {
       promise = promise.then(resolved, rejected)
     }
 
-
-    return dispatchRequest(config)
+    return promise
   }
 
   _requestMethodWithoutData(method: Method, url: string, config?: AxiosRequestConfig) {
